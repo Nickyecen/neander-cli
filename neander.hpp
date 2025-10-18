@@ -9,6 +9,7 @@ class Neander {
 private:
   uint8_t _pc; // Program counter
   uint8_t _ac; // Accumulator
+  uint8_t _bp; // Break Point
 
   // z: b0; n: b1
   uint8_t _flags;
@@ -67,6 +68,9 @@ public:
 
   uint8_t getPC();
   void setPC(uint8_t);
+
+  uint8_t getBP();
+  void setBP(uint8_t);
 
   bool getNegative();
   bool getZero();

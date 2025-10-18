@@ -1,7 +1,7 @@
 #include "neander.hpp"
 #include <cstdint>
 
-Neander::Neander() : _pc(0), _ac(0) {
+Neander::Neander() : _pc(0), _ac(0), _bp(255) {
   memory.fill(0);
   _updateFlags();
 }
@@ -66,7 +66,7 @@ void Neander::_execute(Neander::Mnemonic mn) {
 
 void Neander::run() {
   Mnemonic mn = {NOP, 0};
-  while (_pc < 255 && mn.inst != HLT) {
+  while (_pc < _bp && mn.inst != HLT) {
     mn = step();
   }
 }
@@ -98,6 +98,9 @@ void Neander::setAC(uint8_t byte) {
 
 uint8_t Neander::getPC() { return _pc; }
 void Neander::setPC(uint8_t byte) { _pc = byte; }
+
+uint8_t Neander::getBP() { return _bp; }
+void Neander::setBP(uint8_t byte) { _bp = byte; }
 
 bool Neander::getZero() { return (_flags & 0x01); }
 bool Neander::getNegative() { return (_flags & 0x02); }
