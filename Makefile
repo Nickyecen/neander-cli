@@ -1,13 +1,21 @@
-CXX = g++
-CXXFLAGS = -Wall -lncurses
+CXX      = g++
+CXXFLAGS = -Wall -Wextra -std=c++17 -g
+LDFLAGS  = -lncurses
 
-target: main
+SRCS = main.cpp \
+			 neander.cpp \
+       nwinman/neander_app.cpp \
 
-main: neander.o memory_window.o main.o
-	$(CXX) $(CXXFLAGS) $^ -o main
+OBJS = $(SRCS:.cpp=.o)          # keeps the directory part
 
+main: $(OBJS)
+	$(CXX) $(LDFLAGS) $^ -o $@
+
+# pattern rule that honours the directory
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $< -c	
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm main *.o
+	rm -f main $(OBJS)
+
+.PHONY: clean
